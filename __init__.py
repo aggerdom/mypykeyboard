@@ -1,9 +1,8 @@
 __author__ = 'alex'
-import mykbcodes
 from win32api import GetKeyboardState, GetKeyState
-from mykbcodes import Keycode2Description, Description2Keycode
-import win32con
-from time import
+from time import sleep
+from vkcodes import Keycode2Description, Description2Keycode
+
 
 # use a queue to store the keys that were pressed
 # print len(mykbcodes.KEYcode2description) #len 178
@@ -18,6 +17,7 @@ class Keyboard:
 
     def kbname(self, keyarg):
         """
+        Function for converting back and forth between vkcodes and keydescriptions/keynames.
         If supplied with a keyname (ex: "A KEY"), kbname returns the code for the virtualkey.
         If supplied with an integer representing a keycode, returns the keyname.
         """
@@ -50,7 +50,7 @@ class Keyboard:
         barray = bytearray(GetKeyboardState())
         # barray = bytearray(barray)
         for i, state in enumerate(barray):
-            if (i in mykbcodes.Keycode2Description.keys()) & state:
+            if (i in Keycode2Description.keys()) & state:
                 # print state
                 yield i, state, keycode2num(i)
 
@@ -63,7 +63,7 @@ BOOL WINAPI GetKeyboardState(
 
 def keycode2num(number):
     "function to get keyname from number"
-    return mykbcodes.Keycode2Description[number]
+    return Keycode2Description[number]
 
 
 def scanKB(barray=None):
